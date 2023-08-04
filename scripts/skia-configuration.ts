@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable prettier/prettier */
 import { executeCmdSync } from "./utils";
 
 const NdkDir: string = process.env.ANDROID_NDK ?? "";
@@ -67,7 +69,7 @@ export const commonArgs = [
   ...ParagraphArgs,
 ];
 
-export type PlatformName = "ios" | "android";
+export type PlatformName = "ios" | "android" | "mac";
 
 type Arg = (string | boolean | number)[];
 export type Target = {
@@ -169,6 +171,34 @@ export const configurations: Configuration = {
       ["cxx", '"clang++"'],
     ],
     outputRoot: "package/libs/ios",
+    outputNames: [
+      "libskia.a",
+      "libskshaper.a",
+      "libsvg.a",
+      "libskottie.a",
+      "libsksg.a",
+      ...ParagraphOutputs,
+    ],
+  },
+  mac: {
+    targets: {
+      arm64: {
+        cpu: "arm64",
+        args: [
+        ],
+      },
+      x64: {
+        cpu: "x64",
+        args: [
+        ],
+      },
+    },
+    args: [
+      ["skia_use_metal", true],
+      ["cc", '"clang"'],
+      ["cxx", '"clang++"'],
+    ],
+    outputRoot: "package/libs/macos",
     outputNames: [
       "libskia.a",
       "libskshaper.a",
