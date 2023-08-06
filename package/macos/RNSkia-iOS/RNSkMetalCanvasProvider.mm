@@ -8,7 +8,9 @@
 #import "SkColorSpace.h"
 #import "SkSurface.h"
 
+#import <include/gpu/GrBackendSurface.h>
 #import <include/gpu/GrDirectContext.h>
+#import <include/gpu/ganesh/SkSurfaceGanesh.h>
 
 #pragma clang diagnostic pop
 
@@ -75,16 +77,16 @@ bool RNSkMetalCanvasProvider::renderToCanvas(
   // Reference: https://github.com/Shopify/react-native-skia/issues/1257
   // NOTE: UIApplication.sharedApplication.applicationState can only be
   // accessed from the main thread so we need to check here.
-  if ([[NSThread currentThread] isMainThread]) {
-    auto state = UIApplication.sharedApplication.applicationState;
-    if (state == UIApplicationStateBackground) {
-      // Request a redraw in the next run loop callback
-      _requestRedraw();
-      // and don't draw now since it might cause errors in the metal renderer if
-      // we try to render while in the background. (see above issue)
-      return false;
-    }
-  }
+//  if ([[NSThread currentThread] isMainThread]) {
+//    auto state = UIApplication.sharedApplication.applicationState;
+//    if (state == UIApplicationStateBackground) {
+//      // Request a redraw in the next run loop callback
+//      _requestRedraw();
+//      // and don't draw now since it might cause errors in the metal renderer if
+//      // we try to render while in the background. (see above issue)
+//      return false;
+//    }
+//  }
 
   // Get render context for current thread
   auto renderContext = getMetalRenderContext();
@@ -122,7 +124,7 @@ bool RNSkMetalCanvasProvider::renderToCanvas(
     GrBackendRenderTarget backendRT(_layer.drawableSize.width,
                                     _layer.drawableSize.height, 1, fbInfo);
 
-    auto skSurface = SkSurface::MakeFromBackendRenderTarget(
+    auto skSurface = SkSurfaces::WrapBackendRenderTarget(
         renderContext->skContext.get(), backendRT, kTopLeft_GrSurfaceOrigin,
         kBGRA_8888_SkColorType, nullptr, nullptr);
 

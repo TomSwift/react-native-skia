@@ -1,11 +1,12 @@
 #pragma once
 
 #import <CoreFoundation/CoreFoundation.h>
-#import <UIKit/UIKit.h>
+#import <AppKit/AppKit.h>
+#import <CoreVideo/CoreVideo.h>
 
 typedef void (^block_t)(double);
 @interface DisplayLink : NSObject {
-  CADisplayLink *_displayLink;
+  CVDisplayLinkRef _displayLink;
 }
 
 @property(nonatomic, copy) block_t updateBlock;

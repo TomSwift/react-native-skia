@@ -1,7 +1,7 @@
 #pragma once
 
 #import <CoreFoundation/CoreFoundation.h>
-#import <UIKit/UIKit.h>
+#import <AppKit/AppKit.h>
 
 #import <React/RCTUIManager.h>
 

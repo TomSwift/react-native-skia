@@ -61,7 +61,7 @@ Pod::Spec.new do |s|
   ]
 
   s.macos.source_files = [
-    # "macos/**/*.{h,c,cc,cpp,m,mm,swift}",  
+    "macos/**/*.{h,c,cc,cpp,m,mm,swift}",  
     "cpp/**/*.{h,cpp}"
   ]
 

@@ -4,14 +4,14 @@
 #import <string>
 
 #import <CoreFoundation/CoreFoundation.h>
-#import <UIKit/UIKit.h>
+#import <AppKit/AppKit.h>
 
 #import <RNSkManager.h>
 #import <RNSkiOSView.h>
 
 class RNSkiOSJsView;
 
-@interface SkiaUIView : UIView
+@interface SkiaUIView : RCTUIView
 
 - (instancetype)
     initWithManager:(RNSkia::RNSkManager *)manager

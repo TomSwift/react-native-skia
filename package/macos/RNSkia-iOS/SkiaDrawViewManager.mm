@@ -36,7 +36,7 @@ RCT_CUSTOM_VIEW_PROPERTY(debug, BOOL, SkiaUIView) {
   [(SkiaUIView *)view setDebugMode:debug];
 }
 
-- (UIView *)view {
+- (RCTPlatformView *)view {
   auto skManager = [[self skiaManager] skManager];
   // Pass SkManager as a raw pointer to avoid circular dependenciesr
   return [[SkiaUIView alloc]

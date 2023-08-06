@@ -32,7 +32,7 @@ class RNSkiOSPlatformContext : public RNSkPlatformContext {
 public:
   RNSkiOSPlatformContext(jsi::Runtime *runtime, RCTBridge *bridge)
       : RNSkPlatformContext(runtime, bridge.jsCallInvoker,
-                            [[UIScreen mainScreen] scale]) {
+                            [[NSScreen mainScreen] backingScaleFactor]) {
 
     // We need to make sure we invalidate when modules are freed
     CFNotificationCenterAddObserver(

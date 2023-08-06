@@ -27,34 +27,19 @@
   }
 
   // Get size
-  CGSize size = view.frame.size;
+  NSSize mySize = view.bounds.size;
+  NSSize imgSize = NSMakeSize( mySize.width, mySize.height );
 
-  // Setup context
-  UIGraphicsImageRendererFormat *format =
-      [UIGraphicsImageRendererFormat defaultFormat];
-  format.opaque = NO;
+  NSBitmapImageRep *bir = [view bitmapImageRepForCachingDisplayInRect:[view bounds]];
+  [bir setSize:imgSize];
+  [view cacheDisplayInRect:[view bounds] toBitmapImageRep:bir];
 
-  // Explicitly ask for the standard format to get ARGB 32bits and not 64bits.
-  if (@available(iOS 12.0, *)) {
-    format.preferredRange = UIGraphicsImageRendererFormatRangeStandard;
-  } else {
-    // Fallback on earlier versions
-    format.prefersExtendedRange = false;
-  }
+  NSImage* image = [[NSImage alloc]initWithSize:imgSize] ;
+  [image addRepresentation:bir];
 
-  UIGraphicsImageRenderer *renderer =
-      [[UIGraphicsImageRenderer alloc] initWithSize:size format:format];
-
-  // Render to context - this is now the only part of this function that shows
-  // up in the profiler!
-  UIImage *image = [renderer
-      imageWithActions:^(UIGraphicsImageRendererContext *_Nonnull context) {
-        [view drawViewHierarchyInRect:(CGRect){CGPointZero, size}
-                   afterScreenUpdates:YES];
-      }];
 
   // Convert from UIImage -> CGImage -> SkImage
-  CGImageRef cgImage = image.CGImage;
+  CGImageRef cgImage = [image CGImageForProposedRect: nil context: nil hints: nil];
 
   // Get some info about the image
   auto width = CGImageGetWidth(cgImage);

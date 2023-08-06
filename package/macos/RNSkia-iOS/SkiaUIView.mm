@@ -50,7 +50,7 @@
 
 #pragma mark Lifecycle
 
-- (void)willMoveToSuperview:(UIView *)newWindow {
+- (void)willMoveToSuperview:(RCTPlatformView *)newWindow {
   if (newWindow == NULL) {
     // Remove implementation view when the parent view is not set
     if (_impl != nullptr) {
@@ -147,22 +147,23 @@
 
 #pragma mark Touch handling
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<NSTouch *> *)touches withEvent:(UIEvent *)event {
   [self handleTouches:touches withEvent:event];
 }
 
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet<NSTouch *> *)touches withEvent:(UIEvent *)event {
   [self handleTouches:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet<NSTouch *> *)touches withEvent:(UIEvent *)event {
   [self handleTouches:touches withEvent:event];
 }
 
-- (void)handleTouches:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+- (void)handleTouches:(NSSet<NSTouch *> *)touches withEvent:(UIEvent *)event {
+  /*
   if (event.type == UIEventTypeTouches) {
     std::vector<RNSkia::RNSkTouchInfo> nextTouches;
-    for (UITouch *touch in touches) {
+    for (NSTouch *touch in touches) {
       auto position = [touch preciseLocationInView:self];
       RNSkia::RNSkTouchInfo nextTouch;
       nextTouch.x = position.x;
@@ -171,16 +172,16 @@
       nextTouch.id = [touch hash];
       auto phase = [touch phase];
       switch (phase) {
-      case UITouchPhaseBegan:
+      case NSTouchPhaseBegan:
         nextTouch.type = RNSkia::RNSkTouchInfo::TouchType::Start;
         break;
-      case UITouchPhaseMoved:
+      case NSTouchPhaseMoved:
         nextTouch.type = RNSkia::RNSkTouchInfo::TouchType::Active;
         break;
-      case UITouchPhaseEnded:
+      case NSTouchPhaseEnded:
         nextTouch.type = RNSkia::RNSkTouchInfo::TouchType::End;
         break;
-      case UITouchPhaseCancelled:
+      case NSTouchPhaseCancelled:
         nextTouch.type = RNSkia::RNSkTouchInfo::TouchType::Cancelled;
         break;
       default:
@@ -194,6 +195,7 @@
       _impl->getDrawView()->updateTouchState(nextTouches);
     }
   }
+   */
 }
 
 @end
